@@ -1,0 +1,470 @@
+1.CEASER CIPHER
+
+#include<stdio.h>
+#include<ctype.h>
+
+int main()
+ {
+
+    char text[500], ch;
+    int key;
+
+    printf("Enter a message to encrypt: ");
+    scanf("%s", text);  // Sender input.
+
+    printf("Enter the key: ");
+    scanf("%d", & key); // Key of sender choice .
+
+
+    for (int i = 0; text[i] != '\0'; ++i)  // Converting character by character.
+    {
+    ch = text[i];
+
+    if (isalnum(ch))           // Check for valid characters.
+    {
+          if (islower(ch)) //Lowercase characters.
+          {
+          ch = (ch - 'a' + key) % 26 + 'a';
+          }
+           
+          if (isupper(ch))  // Uppercase characters.
+          {
+          ch = (ch - 'A' + key) % 26 + 'A';
+          }
+
+          if (isdigit(ch))  // Numbers.
+          {
+          ch = (ch - '0' + key) % 10 + '0';
+          }
+          }
+        
+    else  
+         {
+            printf("Invalid Message");  // Invalid character.
+
+         }
+                text[i] = ch; // Adding encoded answer.
+
+    }
+
+    printf("Encrypted message: %s", text);
+
+    return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+HILL CIPHER
+2.#include<stdio.h>
+#include<string.h>
+int main()
+{
+int a[3][3] = {  { 6, 24, 1 }, { 13, 16, 10 }, { 20, 17, 15 }  };
+int b[3][3] = {  { 8, 5, 10 }, { 21, 8, 21 }, { 21, 12, 8 }  };
+int i, j, c[20], d[20],t=0;
+char msg[20];
+
+printf("Enter plain text, uppercase without space( 3 Letters )\n ");
+scanf("%s", msg);
+
+for (i = 0; i < 3; i++) 
+{
+c[i] = msg[i] - 65;
+printf("%d ", c[i]);
+ }
+
+for (i = 0; i < 3; i++)
+{
+t = 0;
+for (j = 0; j < 3; j++) 
+{
+t = t + (a[i][j] * c[j]);
+}
+d[i] = t % 26;
+}
+    
+printf("\nEncrypted Cipher Text :");
+for (i = 0; i < 3; i++)
+printf(" %c", d[i] + 65);
+for (i = 0; i < 3; i++) 
+{
+t = 0;
+for (j = 0; j < 3; j++) 
+{
+t = t + (b[i][j] * d[j]);
+}
+c[i] = t % 26;
+}
+
+printf("\n Decrypted Cipher Text :");
+for (i = 0; i < 3; i++)
+printf(" %c", c[i] + 65);
+return 0;
+}
+/////////////////////////////////////////////////////////////////////////////////////
+3. RAIL FENCE
+
+
+
+#include<stdio.h>
+#include<string.h>
+#include <ctype.h>
+void main()
+{
+int i,j,k,l;
+char a[20],c[20],d[20];
+printf("\n\t\t RAIL FENCE TECHNIQUE");
+printf("\n\nEnter the input string : ");
+gets(a);
+l=strlen(a);
+/*Ciphering*/
+for(i=0,j=0;i<l;i++)
+{
+if(i%2==0)
+c[j++]=a[i];
+}
+for(i=0;i<l;i++)
+{
+if(i%2==1)
+c[j++]=a[i];
+}
+c[j]='\0';
+printf("\nCipher text after applying rail fence :");
+printf("\n%s",c);
+/*Deciphering*/
+if(l%2==0)
+k=l/2;
+else
+k=(l/2)+1;
+for(i=0,j=0;i<k;i++)
+{
+d[j]=c[i];
+j=j+2;
+}
+for(i=k,j=1;i<l;i++)
+{
+d[j]=c[i];
+j=j+2;
+}
+d[l]='\0';
+printf("\nText after decryption : ");
+printf("%s",d);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+4.KEY GEN ALGORITHM
+
+#include<stdio.h>
+int main()
+{
+ int i, cnt=0, p8[8]={6,7,8,9,1,2,3,4};
+ int p10[10]={6,7,8,9,10,1,2,3,4,5};
+ 
+ char input[11], k1[10], k2[10], temp[11];
+ char LS1[5], LS2[5];
+ //k1, k2 are for storing interim keys
+ //p8 and p10 are for storing permutation key
+ 
+ //Read 10 bits from user...
+ printf("Enter 10 bits input:");
+ scanf("%s",input); 
+ input[10]='\0';
+ 
+ //Applying p10...
+ for(i=0; i<10; i++)
+ {
+  cnt = p10[i];
+  temp[i] = input[cnt-1];
+ }
+ temp[i]='\0';
+ printf("\nYour p10 key is    :");
+ for(i=0; i<10; i++)
+ { printf("%d,",p10[i]); }
+ 
+ printf("\nBits after p10     :");
+ puts(temp);
+ //Performing LS-1 on first half of temp
+ for(i=0; i<5; i++)
+ {
+  if(i==4)
+   temp[i]=temp[0];
+  else
+   temp[i]=temp[i+1];   
+ }
+
+ //Performing LS-1 on second half of temp
+ for(i=5; i<10; i++)
+ {
+  if(i==9)
+   temp[i]=temp[5];
+  else
+   temp[i]=temp[i+1];   
+ }
+ printf("Output after LS-1  :");
+ puts(temp);
+ 
+ printf("\nYour p8 key is     :");
+ for(i=0; i<8; i++)
+ { printf("%d,",p8[i]); }
+
+ //Applying p8...
+ for(i=0; i<8; i++)
+ {
+  cnt = p8[i];
+  k1[i] = temp[cnt-1];
+ }
+ printf("\nYour key k1 is     :");
+ k1[8] = '\0';
+
+ puts(k1); 
+//This program can be extended to generate k2 as per DES algorithm.
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+5.RSA
+
+#include <stdlib.h>                 
+#include <math.h>
+#include <stdio.h>
+
+
+int checkPrime(int n) {
+	int i;
+	int m = n / 2;
+	
+	for (i = 2; i <= m; i++) {
+		if (n % i == 0) {
+			return 0; // Not Prime
+		}
+	}
+
+
+	return 1; // Prime
+}
+
+
+int findGCD(int n1, int n2) {
+	int i, gcd;
+
+
+	for(i = 1; i <= n1 && i <= n2; ++i) {
+		if(n1 % i == 0 && n2 % i == 0)
+			gcd = i;
+	}
+
+
+	return gcd;
+}
+
+
+int powMod(int a, int b, int n) {
+	long long x = 1, y = a;
+
+
+	while (b > 0) {
+		if (b % 2 == 1)
+			x = (x * y) % n;
+		y = (y * y) % n; // Squaring the base
+		b /= 2;
+	}
+
+
+	return x % n;
+}
+
+
+int main(int argc, char* argv[]) {
+	int p, q;
+	int n, phin;
+
+
+	int data, cipher, decrypt;
+
+
+	while (1) {
+		printf("Enter any two prime numbers: ");
+		scanf("%d %d", &p, &q);
+
+
+		if (!(checkPrime(p) && checkPrime(q)))
+			printf("Both numbers are not prime. Please enter prime numbers only...\n");
+		else if (!checkPrime(p))
+			printf("The first prime number you entered is not prime, please try again...\n");
+		else if (!checkPrime(q))
+			printf("The second prime number you entered is not prime, please try again...\n");
+		else
+			break;
+	}
+	
+	n = p * q;
+
+
+	phin = (p - 1) * (q - 1);
+
+
+	int e = 0;
+	for (e = 5; e <= 100; e++) {
+		if (findGCD(phin, e) == 1)
+			break;
+	}
+	
+	int d = 0;
+	for (d = e + 1; d <= 100; d++) {
+		if ( ((d * e) % phin) == 1)
+			break;
+	}
+
+
+	printf("Value of e: %d\nValue of d: %d\n", e, d);
+
+
+	printf("Enter some numerical data: ");
+	scanf("%d", &data);
+
+
+	cipher = powMod(data, e, n);
+	printf("The cipher text is: %d\n", cipher);
+
+
+	decrypt = powMod(cipher, d, n);
+	printf("The decrypted text is: %d\n", decrypt);
+	return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+6. DIFFEHELLMAN
+
+    #include<stdio.h>
+	long int power(int a,int b,int mod)
+	 {
+	  long long int t;
+	  if(b==1)
+	  return a;
+	  t=power(a,b/2,mod);
+	  if(b%2==0)
+	   return (t*t)%mod;
+	  else
+	   return (((t*t)%mod)*a)%mod;
+	 }
+	 long long int calculateKey(int a,int x,int n)
+	 {
+	  return power(a,x,n);
+	 }
+	 int main()
+	 {
+	  int n,g,x,a,y,b;  
+	// both the persons will be agreed upon the common n and g  
+	  printf("Enter the value of n and g : "); 
+	  scanf("%d%d",&n,&g);    
+	// first person will choose the x  
+	  printf("Enter the value of x for the first person : ");
+	  scanf("%d",&x);  a=power(g,x,n);    
+	// second person will choose the y
+	  printf("Enter the value of y for the second person : ");
+	  scanf("%d",&y);  b=power(g,y,n);
+	  printf("key for the first person is : %lld\n",power(b,x,n));
+	  printf("key for the second person is : %lld\n",power(a,y,n));
+	  return 0;
+	 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+7. SHA-1
+
+import java.math.BigInteger; 
+import java.security.MessageDigest; 
+import java.security.NoSuchAlgorithmException; 
+ 
+public class GFG { 
+    public static String encryptThisString(String input) { 
+        try { 
+            // getInstance() method is called with algorithm SHA-1 
+            MessageDigest md = MessageDigest.getInstance("SHA-1"); 
+ 
+            // digest() method is called 
+            // to calculate message digest of the input string 
+            // returned as array of byte 
+            byte[] messageDigest = md.digest(input.getBytes()); 
+ 
+            // Convert byte array into signum representation 
+            BigInteger no = new BigInteger(1, messageDigest); 
+ 
+            // Convert message digest into hex value 
+            String hashtext = no.toString(16); 
+ 
+            // Add preceding 0s to make it 40 digits long 
+            while (hashtext.length() < 40) { 
+                hashtext = "0" + hashtext; 
+            } 
+ 
+            // return the HashText 
+            return hashtext; 
+        } 
+ 
+        // For specifying wrong message digest algorithms 
+        catch (NoSuchAlgorithmException e) { 
+            throw new RuntimeException(e); 
+        } 
+    } 
+ 
+    // Driver code 
+    public static void main(String args[]) throws NoSuchAlgorithmException { 
+        System.out.println("HashCode Generated by SHA-1 for:"); 
+ 
+        String s1 = "GeeksForGeeks"; 
+        System.out.println("\n" + s1 + " : " + encryptThisString(s1)); 
+ 
+        String s2 = "hello world"; 
+        System.out.println("\n" + s2 + " : " + encryptThisString(s2)); 
+    } 
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+8. SHA -512
+
+import java.math.BigInteger;
+import java.security.MessageDigest; 
+import java.security.NoSuchAlgorithmException; 
+ 
+// Driver Class 
+public class GFG {        // Main Function 
+    public static String encryptThisString(String input) 
+    { 
+        try { 
+            // getInstance() method is called with algorithm SHA-512 
+            MessageDigest md = MessageDigest.getInstance("SHA-512"); 
+            // digest() method is called // to calculate message digest of the input string 
+                        // returned as array of byte 
+            byte[] messageDigest = md.digest(input.getBytes()); 
+            // Convert byte array into signum representation 
+            BigInteger no = new BigInteger(1, messageDigest); 
+            // Convert message digest into hex value 
+            String hashtext = no.toString(16); 
+            // Ensure the hash is padded to 128 characters 
+            while (hashtext.length() < 128) { 
+                hashtext = "0" + hashtext; 
+            } 
+            // return the HashText 
+            return hashtext; 
+        } 
+        // For specifying wrong message digest algorithms 
+        catch (NoSuchAlgorithmException e) { 
+            throw new RuntimeException(e); 
+        } 
+    } 
+    // Driver code 
+    public static void main(String args[]) throws NoSuchAlgorithmException 
+    { 
+        System.out.println("HashCode Generated by SHA-512 for: "); 
+        String s1 = "GeeksForGeeks"; 
+        System.out.println("\n" + s1 + " : " + encryptThisString(s1)); 
+        String s2 = "hello world"; 
+        System.out.println("\n" + s2 + " : " + encryptThisString(s2)); 
+    } 
+}
+
+
+
+                 
